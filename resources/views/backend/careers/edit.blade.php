@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-
+@section('title', 'Edit Career')
 @section('content')
     <style>
         .form-check,
@@ -26,21 +26,20 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h4>About us</h4>
+                <h4>Client</h4>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center justify-content-between">
-                                <div class="card-title">Edit About us</div>
+                                <div class="card-title">Edit Career</div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{route('about-us.update', $about ? $about->id : '')}}" method="POST"
+                            <form action="{{route('careers.update', $career ? $career->id : '')}}" method="POST"
                                   enctype="multipart/form-data">
                                 @csrf
-{{--                                @dd($about)--}}
                                 <div class="row">
                                     <!-- Image -->
                                     <div class="col-12 col-md-6 col-lg-12">
@@ -51,10 +50,10 @@
                                                    onchange="previewImage(event)" />
                                             <div class="mt-2">
 
-                                                @if (!empty($about->image))
+                                                @if (!empty($career->image))
                                                     <img id="imagePreview"
-                                                         src="{{ asset('storage/' . $about->image) }}"
-                                                         alt="About Image" width="75">
+                                                         src="{{ asset('storage/' . $career->image) }}"
+                                                         alt="career Image" width="75">
                                                 @else
                                                     <img id="imagePreview"
                                                          src="{{ asset('default.png') }}"
@@ -70,7 +69,7 @@
                                             <label for="title" class="fw-bolder">Title <span style="color: red">*</span></label>
                                             <input type="text" name="title"
                                                    class="form-control @error('title') is-invalid @enderror"
-                                                   value="{{ old('title', $about->title ?? '') }}">
+                                                   value="{{ old('title', $career->title ?? '') }}">
                                             @error('title')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -82,7 +81,7 @@
                                             <label for="heading" class="fw-bolder">Heading <span style="color: red">*</span></label>
                                             <input type="text" name="heading"
                                                    class="form-control @error('heading') is-invalid @enderror"
-                                                   value="{{ old('heading', $about->heading ?? '') }}">
+                                                   value="{{ old('heading', $career->heading ?? '') }}">
                                             @error('heading')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
@@ -92,7 +91,7 @@
                                     <div class="col-12 col-md-6 col-lg-12">
                                         <div class="form-group">
                                             <label for="details"  class="fw-bolder">Details</label>
-                                            <textarea name="details"  class="form-control summernote" cols="" rows="3">{!! old('details', $about->details ?? '') !!} </textarea>
+                                            <textarea name="details"  class="form-control summernote" cols="" rows="3">{!! old('details', $career->details ?? '') !!} </textarea>
                                         </div>
                                     </div>
                                 </div>

@@ -25,6 +25,7 @@ use App\Http\Controllers\Backend\SearchController;
 use App\Http\Controllers\Backend\InvestmentController;
 use App\Http\Controllers\Backend\AboutUsController;
 use App\Http\Controllers\Backend\SliderController;
+use App\Http\Controllers\CareerController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -39,10 +40,20 @@ Route::middleware('auth')->group(function () {
     Route::controller(SliderController::class)->group(function () {
        Route::get('/slider', 'index')->name('slider.index');
        Route::get('/create', 'create')->name('slider.create');
+       Route::post('/store', 'store')->name('slider.store');
+       Route::get('/slider-status-update/{id}', 'statusChange')->name('slider.status-change');
+       Route::get('/slider-edit/{id}', 'edit')->name('slider.edit');
+       Route::post('/slider-update/{id}', 'update')->name('slider.update');
+       Route::post('/slider-delete/{id}', 'delete')->name('slider.delete');
     });
     Route::controller(AboutUsController::class)->group(function() {
        Route::get('/about-us/edit', 'edit')->name('about-us.edit');
        Route::post('/about-us/update', 'update')->name('about-us.update');
+    });
+
+    Route::controller(CareerController::class)->group(function() {
+       Route::get('/careers/edit', 'edit')->name('careers.edit');
+       Route::post('/careers/update', 'update')->name('careers.update');
     });
 
     Route::resource('permissions', PermissionController::class);

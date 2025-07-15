@@ -39,6 +39,15 @@
                 </li>
 
 
+
+
+                <li class="nav-section">
+                    <span class="sidebar-mini-icon">
+                        <i class="fa fa-ellipsis-h"></i>
+                    </span>
+                    <h4 class="text-section">Components</h4>
+                </li>
+
                 <li class="nav-item {{ request()->is('/about-us/edit') ? 'active' : '' }}">
                     @role('super_admin')
                     <a data-bs-toggle="xcollapse" href="{{ url('/about-us/edit') }}" class="collapsed" aria-expanded="false">
@@ -55,13 +64,21 @@
                         @endrole
                 </li>
 
-                <li class="nav-section">
-                    <span class="sidebar-mini-icon">
-                        <i class="fa fa-ellipsis-h"></i>
-                    </span>
-                    <h4 class="text-section">Components</h4>
+                <li class="nav-item {{ request()->is('/careers/edit') ? 'active' : '' }}">
+                    @role('super_admin')
+                    <a data-bs-toggle="xcollapse" href="{{ url('/careers/edit') }}" class="collapsed" aria-expanded="false">
+                        <i class="fas fa-home"></i>
+                        <p>Careers</p>
+                    </a>
+                    @else
+                        @can('dashboard.view')
+                            <a data-bs-toggle="xcollapse" href="{{ url('/careers/edit') }}" class="collapsed" aria-expanded="false">
+                                <i class="fas fa-home"></i>
+                                <p>Careers</p>
+                            </a>
+                        @endcan
+                        @endrole
                 </li>
-
                 <li class="nav-item {{ request()->is('slider*') ? 'active' : '' }}">
                     @role('super_admin')
                     <a data-bs-toggle="collapse" href="#slider"

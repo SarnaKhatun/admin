@@ -37,7 +37,7 @@
                         <i class="icon-arrow-right"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Clients</a>
+                        <a href="#">Slider</a>
                     </li>
                 </ul>
             </div>
@@ -94,23 +94,24 @@
                                                 <img src="{{asset('storage/'.$row->image)}}" alt=""
                                                      style="height: 70px; width: 70px">
                                             </td>
-                                            <td>{{ $row->name }}</td>
+                                            <td>{{ $row->title }}</td>
                                             <td>{{ $row->url }}</td>
-                                            <td>{{ $row->status == 1 ? 'Active':'Inactive' }}</td>
-                                            <td>{{ \Illuminate\Support\Str::words($row->description, 5, '...') }}</td>
-                                            <td>{{ $row->dob ? \Carbon\Carbon::parse($row->dob)->format('d-m-Y') : '' }}
-                                            </td>
-                                            @role('super_admin')
                                             <td>
-                                                <a href=""
+                                                <a href="{{route('slider.status-change', $row->id)}}"
+                                                   class="btn btn-sm btn-{{$row->status == 1 ? 'success': 'danger'}}">
+                                                {{ $row->status == 1 ? 'Active':'Inactive' }}</td>
+                                                </a>
+
+                                            <td>{{ \Illuminate\Support\Str::words($row->description, 5, '...') }}</td>
+                                            <td>
+                                                <a href="{{ route('slider.edit', $row->id) }}"
                                                    class="btn btn-sm btn-primary">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <form action=""
+                                                <form action="{{ route('slider.delete', $row->id) }}"
                                                       method="POST"
                                                       style="display:inline;">
                                                     @csrf
-                                                    @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger"
                                                             onclick="return confirm('Are you sure you want to delete this client?');">
                                                         <i class="fa fa-trash"></i>

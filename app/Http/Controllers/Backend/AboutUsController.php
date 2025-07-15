@@ -48,6 +48,6 @@ class AboutUsController extends Controller
         $about_us->details = $request->details;
         $about_us->save();
 
-        return redirect()->route('about-us.edit');
+        return redirect()->route('about-us.edit')->with('success', 'About Us updated successfully');
     }
 }

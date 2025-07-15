@@ -49,20 +49,20 @@
                             <form action="{{ route('slider.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row g-2">
-                                    <!-- Name -->
-                                    <div class="col-12 col-md-6 col-lg-4">
+                                    <!-- title -->
+                                    <div class="col-12 col-md-6 col-lg-6">
                                         <div class="form-group">
-                                            <label for="name">Name <span style="color: red">*</span></label>
-                                            <input type="text" name="name"
-                                                   class="form-control @error('name') is-invalid @enderror"
-                                                   value="{{ old('name') }}">
-                                            @error('name')
+                                            <label for="title">Title <span style="color: red">*</span></label>
+                                            <input type="text" name="title"
+                                                   class="form-control @error('title') is-invalid @enderror"
+                                                   value="{{ old('title') }}">
+                                            @error('title')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
                                     </div>
 
-                                    <div class="col-12 col-md-6 col-lg-4">
+                                    <div class="col-12 col-md-6 col-lg-6">
                                         <div class="form-group">
                                             <label for="url">URL<span style="color: red">*</span></label>
                                             <input type="text" name="url"
@@ -73,19 +73,10 @@
                                             @enderror
                                         </div>
                                     </div>
-
-
-                                    <!--Description-->
-                                    <div class="col-12 col-md-6 col-lg-4">
+                                    <!-- Slider Image -->
+                                    <div class="col-12 col-md-6 col-lg-6">
                                         <div class="form-group">
-                                            <label for="description">Description</label>
-                                            <textarea name="description" id="" class="form-control" cols="" rows="6"></textarea>
-                                        </div>
-                                    </div>
-                                    <!-- Client Image -->
-                                    <div class="col-12 col-md-6 col-lg-4">
-                                        <div class="form-group">
-                                            <label for="image">Image(Preferred size: 400X400)</label>
+                                            <label for="image">Image</label>
                                             <input type="file" name="image"
                                                    class="form-control @error('image') is-invalid @enderror" id="image"
                                                    onchange="previewImage(event)" />
@@ -99,21 +90,14 @@
 
                                         </div>
                                     </div>
-                                    <!-- Client Signature Image -->
-                                    <div class="col-12 col-md-6 col-lg-4">
+                                    <!--Description-->
+                                    <div class="col-12 col-md-6 col-lg-6">
                                         <div class="form-group">
-                                            <label for="signature_image">Signature Image(Preferred size: 100X100)</label>
-                                            <input type="file" name="signature_image"
-                                                   class="form-control @error('signature_image') is-invalid @enderror"
-                                                   id="signature_image" onchange="previewSignatureImage(event)" />
-                                            @error('signature_image')
+                                            <label for="description">Description<span style="color: red">*</span></label>
+                                            <textarea name="description" id="" class="form-control @error('description') is-invalid @enderror" cols="" rows="4"></textarea>
+                                            @error('description')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
-
-                                            <div class="mt-2">
-                                                <img id="imageSignaturePreview" width="50">
-                                            </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -138,49 +122,5 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         }
-    </script>
-
-    <script type="text/javascript">
-        function previewSignatureImage(event) {
-            var reader1 = new FileReader();
-            reader1.onload = function() {
-                var output1 = document.getElementById('imageSignaturePreview');
-                output1.src = reader1.result;
-                output1.style.display = 'block';
-            };
-            reader1.readAsDataURL(event.target.files[0]);
-        }
-    </script>
-    <script>
-        $(document).ready(function() {
-
-            $(".js-example-templating").select2({
-                placeholder: "Select",
-                allowClear: true
-            });
-            // Fetch Thanas based on District
-            $('#district').change(function() {
-                var districtID = $(this).val();
-                if (districtID) {
-                    $.ajax({
-                        url: "{{ route('getThanas') }}",
-                        type: "GET",
-                        data: {
-                            district_id: districtID
-                        },
-                        success: function(data) {
-                            $('#thana').empty().append(
-                                '<option value="">Select Police Station</option>');
-                            $.each(data, function(key, value) {
-                                $('#thana').append('<option value="' + key + '">' +
-                                    value + '</option>');
-                            });
-                        }
-                    });
-                } else {
-                    $('#thana').empty().append('<option value="">Select Police Station</option>');
-                }
-            });
-        });
     </script>
 @endpush
