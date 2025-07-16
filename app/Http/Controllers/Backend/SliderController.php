@@ -55,7 +55,7 @@ class SliderController extends Controller
     public function edit($id)
     {
         $slider = Slider::find($id);
-        return view('backend.slider.edit', compact('slider'));
+        return view('backend.slider.create', compact('slider'));
     }
 
     public function update(Request $request, $id)
@@ -65,7 +65,7 @@ class SliderController extends Controller
             'title' => 'required|string|max:255',
             'url' => 'required|string|max:255',
             'description' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         if ($request->hasFile('image')) {

@@ -1,4 +1,5 @@
 @extends('backend.layouts.master')
+@section('title', 'Permission Edit')
 @section('content')
     <div class="container">
         <div class="page-inner">

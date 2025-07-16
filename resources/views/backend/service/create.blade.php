@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-@section('title', 'Slider Create')
+@section('title', 'Service Create')
 @section('content')
     <style>
         .form-check,
@@ -26,29 +26,41 @@
     <div class="container">
         <div class="page-inner">
             <div class="page-header">
-                <h4>Slider</h4>
+                <h4>Service</h4>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center justify-content-between">
-                                <div class="card-title">Create Slider</div>
+                                <div class="card-title">Create Service</div>
                                 <div class="py-0 ms-md-auto py-md-0">
                                     @role('super_admin')
-                                    <a href="{{ route('slider.index') }}" class="btn btn-primary btn-sm">Back</a>
+                                    <a href="{{ route('service.index') }}" class="btn btn-primary btn-sm">Back</a>
                                     @else
-                                        @can('slider.list')
-                                            <a href="{{ route('slider.index') }}" class="btn btn-primary btn-sm">Back</a>
+                                        @can('service.list')
+                                            <a href="{{ route('service.index') }}" class="btn btn-primary btn-sm">Back</a>
                                         @endcan
                                         @endrole
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
-                            <form action="{{ route('slider.store') }}" method="POST" enctype="multipart/form-data">
+                            <form action="{{ route('service.store') }}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="row g-2">
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="category">Category Name</label>
+                                            <select name="category_id" id="category"
+                                                    class="form-control js-example-templating">
+                                                <option value="">Select Category</option>
+                                                @foreach ($categories as $category)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
+                                    </div>
                                     <!-- title -->
                                     <div class="col-12 col-md-6 col-lg-6">
                                         <div class="form-group">
@@ -57,6 +69,19 @@
                                                    class="form-control @error('title') is-invalid @enderror"
                                                    value="{{ old('title') }}">
                                             @error('title')
+                                            <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="heading">Heading <span style="color: red">*</span></label>
+                                            <input type="text" name="heading"
+                                                   class="form-control @error('heading') is-invalid @enderror"
+                                                   value="{{ old('heading') }}">
+                                            @error('heading')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -73,7 +98,29 @@
                                             @enderror
                                         </div>
                                     </div>
-                                    <!-- Slider Image -->
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="other_title">Other Title<span style="color: red">*</span></label>
+                                            <input type="text" name="other_title"
+                                                   class="form-control @error('other_title') is-invalid @enderror"
+                                                   value="{{ old('other_title') }}">
+                                            @error('other_title')
+                                            <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-lg-6">
+                                        <div class="form-group">
+                                            <label for="other_heading">Other Heading<span style="color: red">*</span></label>
+                                            <input type="text" name="other_heading"
+                                                   class="form-control @error('other_heading') is-invalid @enderror"
+                                                   value="{{ old('other_heading') }}">
+                                            @error('other_heading')
+                                            <div class="text-danger">{{ $message }}</div>
+                                            @enderror
+                                        </div>
+                                    </div>
+                                    <!-- Service Image -->
                                     <div class="col-12 col-md-6 col-lg-6">
                                         <div class="form-group">
                                             <label for="image">Image</label>
@@ -90,12 +137,12 @@
 
                                         </div>
                                     </div>
-                                    <!--Description-->
+                                    <!--Details-->
                                     <div class="col-12 col-md-6 col-lg-6">
                                         <div class="form-group">
-                                            <label for="description">Description<span style="color: red">*</span></label>
-                                            <textarea name="description" id="" class="form-control @error('description') is-invalid @enderror" cols="" rows="4"></textarea>
-                                            @error('description')
+                                            <label for="details">Details<span style="color: red">*</span></label>
+                                            <textarea name="details" id="" class="form-control @error('details') is-invalid @enderror" cols="" rows="4"></textarea>
+                                            @error('details')
                                             <div class="text-danger">{{ $message }}</div>
                                             @enderror
                                         </div>
@@ -122,5 +169,15 @@
             };
             reader.readAsDataURL(event.target.files[0]);
         }
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+            $(".js-example-templating").select2({
+                placeholder: "Select",
+                allowClear: true
+            });
+        });
     </script>
 @endpush

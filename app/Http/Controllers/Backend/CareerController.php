@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Backend;
 
+use App\Http\Controllers\Controller;
 use App\Models\Career;
-use App\Models\Slider;
 use App\Traits\ImageHandler;
 use Illuminate\Http\Request;
 
@@ -21,10 +21,10 @@ class CareerController extends Controller
         $career = Career::first() ?? new Career();
 
         $request->validate([
-            'title' => 'required|max:255',
-            'heading' => 'required|max:255',
+            'title' => 'required|string|max:255',
+            'heading' => 'required|string|max:255',
             'details' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         // Only set $image if there's a new file
@@ -32,7 +32,7 @@ class CareerController extends Controller
             $image = $this->replaceImage(
                 $request->file('image'),
                 $career->image,
-                'uploads/images/about-us/image',
+                'uploads/images/careers/image',
                 'public'
             );
             $career->image = $image;

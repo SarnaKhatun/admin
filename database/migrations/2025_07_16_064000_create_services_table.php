@@ -11,12 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('careers', function (Blueprint $table) {
+        Schema::create('services', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('category_id')->unsigned()->index();
             $table->string('title');
             $table->string('heading');
-            $table->longText('details');
+            $table->string('url');
+            $table->text('details');
+            $table->string('other_title')->nullable();
+            $table->string('other_heading')->nullable();
             $table->text('image')->nullable();
+            $table->string('status')->default('Inactive')->comment('Inactive, Active');
             $table->timestamps();
         });
     }
@@ -26,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('careers');
+        Schema::dropIfExists('services');
     }
 };

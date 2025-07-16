@@ -1,5 +1,5 @@
 @extends('backend.layouts.master')
-
+@section('title', 'About Us')
 @section('content')
     <style>
         .form-check,
@@ -45,7 +45,7 @@
                                     <!-- Image -->
                                     <div class="col-12 col-md-6 col-lg-12">
                                         <div class="form-group">
-                                            <label for="image" class="fw-bolder">Image(Preferred size: 400X400)</label>
+                                            <label for="image" class="fw-bolder">Image</label>
                                             <input type="file" name="image"
                                                    class="@error('image') is-invalid @enderror" id="image"
                                                    onchange="previewImage(event)" />

@@ -37,17 +37,12 @@
                         @endcan
                         @endrole
                 </li>
-
-
-
-
                 <li class="nav-section">
                     <span class="sidebar-mini-icon">
                         <i class="fa fa-ellipsis-h"></i>
                     </span>
                     <h4 class="text-section">Components</h4>
                 </li>
-
                 <li class="nav-item {{ request()->is('/about-us/edit') ? 'active' : '' }}">
                     @role('super_admin')
                     <a data-bs-toggle="xcollapse" href="{{ url('/about-us/edit') }}" class="collapsed" aria-expanded="false">
@@ -55,7 +50,7 @@
                         <p>About Us</p>
                     </a>
                     @else
-                        @can('dashboard.view')
+                        @can('about-us.view')
                             <a data-bs-toggle="xcollapse" href="{{ url('/about-us/edit') }}" class="collapsed" aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>About Us</p>
@@ -63,7 +58,6 @@
                         @endcan
                         @endrole
                 </li>
-
                 <li class="nav-item {{ request()->is('/careers/edit') ? 'active' : '' }}">
                     @role('super_admin')
                     <a data-bs-toggle="xcollapse" href="{{ url('/careers/edit') }}" class="collapsed" aria-expanded="false">
@@ -71,7 +65,7 @@
                         <p>Careers</p>
                     </a>
                     @else
-                        @can('dashboard.view')
+                        @can('careers.view')
                             <a data-bs-toggle="xcollapse" href="{{ url('/careers/edit') }}" class="collapsed" aria-expanded="false">
                                 <i class="fas fa-home"></i>
                                 <p>Careers</p>
@@ -79,10 +73,26 @@
                         @endcan
                         @endrole
                 </li>
-                <li class="nav-item {{ request()->is('slider*') ? 'active' : '' }}">
+                <li class="nav-item {{ request()->is('/mission-vision/edit') ? 'active' : '' }}">
+                    @role('super_admin')
+                    <a data-bs-toggle="xcollapse" href="{{ url('/mission-vision/edit') }}" class="collapsed" aria-expanded="false">
+                        <i class="fas fa-home"></i>
+                        <p>Mission/Vision</p>
+                    </a>
+                    @else
+                        @can('mission-vision.view')
+                            <a data-bs-toggle="xcollapse" href="{{ url('/mission-vision/edit') }}" class="collapsed" aria-expanded="false">
+                                <i class="fas fa-home"></i>
+                                <p>Mission/Vision</p>
+                            </a>
+                        @endcan
+                        @endrole
+                </li>
+                {{-- Slider Menu --}}
+                <li class="nav-item {{ request()->routeIs('slider.*') ? 'active' : '' }}">
                     @role('super_admin')
                     <a data-bs-toggle="collapse" href="#slider"
-                       aria-expanded="{{ request()->is('slider*') ? 'true' : 'false' }}">
+                       aria-expanded="{{ request()->routeIs('slider.*') ? 'true' : 'false' }}">
                         <i class="fas fa-address-book"></i>
                         <p>Sliders</p>
                         <span class="caret"></span>
@@ -90,7 +100,7 @@
                     @else
                         @canany(['slider.list', 'slider.create'])
                             <a data-bs-toggle="collapse" href="#slider"
-                               aria-expanded="{{ request()->is('slider*') ? 'true' : 'false' }}">
+                               aria-expanded="{{ request()->routeIs('slider.*') ? 'true' : 'false' }}">
                                 <i class="fas fa-address-book"></i>
                                 <p>Sliders</p>
                                 <span class="caret"></span>
@@ -98,14 +108,19 @@
                         @endcanany
                         @endrole
 
-                        {{-- Ensure the collapse is open if any slider-related route is active --}}
-                        <div class="collapse {{ request()->is('slider*') ? 'show' : '' }}" id="slider">
+                        <div class="collapse {{ request()->routeIs('slider.*') ? 'show' : '' }}" id="slider">
                             <ul class="nav nav-collapse">
                                 @role('super_admin')
                                 <li>
                                     <a href="{{ route('slider.index') }}"
                                        class="nav-link {{ request()->routeIs('slider.index') ? 'active' : '' }}">
                                         <span class="sub-item">List</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('slider.create') }}"
+                                       class="nav-link {{ request()->routeIs('slider.create') ? 'active' : '' }}">
+                                        <span class="sub-item">Create</span>
                                     </a>
                                 </li>
                                 @else
@@ -117,107 +132,136 @@
                                             </a>
                                         </li>
                                     @endcan
-                                    @endrole
 
-                                        @role('super_admin')
+                                    @can('slider.create')
                                         <li>
                                             <a href="{{ route('slider.create') }}"
                                                class="nav-link {{ request()->routeIs('slider.create') ? 'active' : '' }}">
                                                 <span class="sub-item">Create</span>
                                             </a>
                                         </li>
-                                        @else
-                                            @can('slider.list')
-                                                <li>
-                                                    <a href="{{ route('slider.create') }}"
-                                                       class="nav-link {{ request()->routeIs('slider.create') ? 'active' : '' }}">
-                                                        <span class="sub-item">Create</span>
-                                                    </a>
-                                                </li>
-                                            @endcan
-                                            @endrole
+                                    @endcan
+                                    @endrole
                             </ul>
                         </div>
                 </li>
 
-                <li class="nav-item {{ request()->is('clients*') ? 'active' : '' }}">
+                {{-- Service Category Menu --}}
+                <li class="nav-item {{ request()->routeIs('service-category.*') ? 'active' : '' }}">
                     @role('super_admin')
-                    <a data-bs-toggle="collapse" href="#base"
-                       aria-expanded="{{ request()->is('clients*') ? 'true' : 'false' }}">
+                    <a data-bs-toggle="collapse" href="#service-category"
+                       aria-expanded="{{ request()->routeIs('service-category.*') ? 'true' : 'false' }}">
                         <i class="fas fa-address-book"></i>
-                        <p>Clients</p>
+                        <p>Service Category</p>
                         <span class="caret"></span>
                     </a>
                     @else
-                        @canany(['client.list', 'client.create', 'client.statement'])
-                            <a data-bs-toggle="collapse" href="#base"
-                               aria-expanded="{{ request()->is('clients*') ? 'true' : 'false' }}">
+                        @canany(['service-category.list', 'service-category.create'])
+                            <a data-bs-toggle="collapse" href="#service-category"
+                               aria-expanded="{{ request()->routeIs('service-category.*') ? 'true' : 'false' }}">
                                 <i class="fas fa-address-book"></i>
-                                <p>Clients</p>
+                                <p>Service Category</p>
                                 <span class="caret"></span>
                             </a>
                         @endcanany
                         @endrole
 
-                        {{-- Ensure the collapse is open if any clients-related route is active --}}
-                        <div class="collapse {{ request()->is('clients*') ? 'show' : '' }}" id="base">
+                        <div class="collapse {{ request()->routeIs('service-category.*') ? 'show' : '' }}" id="service-category">
                             <ul class="nav nav-collapse">
                                 @role('super_admin')
                                 <li>
-                                    <a href="{{ route('clients.index') }}"
-                                       class="nav-link {{ request()->routeIs('clients.index') ? 'active' : '' }}">
-                                        <span class="sub-item">Client List</span>
+                                    <a href="{{ route('service-category.index') }}"
+                                       class="nav-link {{ request()->routeIs('service-category.index') ? 'active' : '' }}">
+                                        <span class="sub-item">List</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('service-category.create') }}"
+                                       class="nav-link {{ request()->routeIs('service-category.create') ? 'active' : '' }}">
+                                        <span class="sub-item">Create</span>
                                     </a>
                                 </li>
                                 @else
-                                    @can('client.list')
+                                    @can('service-category.list')
                                         <li>
-                                            <a href="{{ route('clients.index') }}"
-                                               class="nav-link {{ request()->routeIs('clients.index') ? 'active' : '' }}">
-                                                <span class="sub-item">Client List</span>
+                                            <a href="{{ route('service-category.index') }}"
+                                               class="nav-link {{ request()->routeIs('service-category.index') ? 'active' : '' }}">
+                                                <span class="sub-item">List</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('service-category.create')
+                                        <li>
+                                            <a href="{{ route('service-category.create') }}"
+                                               class="nav-link {{ request()->routeIs('service-category.create') ? 'active' : '' }}">
+                                                <span class="sub-item">Create</span>
                                             </a>
                                         </li>
                                     @endcan
                                     @endrole
-
-                                    @role('super_admin')
-                                    <li>
-                                        <a href="{{ route('clients.create') }}"
-                                           class="nav-link {{ request()->routeIs('clients.create') ? 'active' : '' }}">
-                                            <span class="sub-item">Add Client</span>
-                                        </a>
-                                    </li>
-                                    @else
-                                        @can('client.create')
-                                            <li>
-                                                <a href="{{ route('clients.create') }}"
-                                                   class="nav-link {{ request()->routeIs('clients.create') ? 'active' : '' }}">
-                                                    <span class="sub-item">Add Client</span>
-                                                </a>
-                                            </li>
-                                        @endcan
-                                        @endrole
-
-                                            @role('super_admin')
-                                            <li>
-                                                <a href="{{ route('clients.statement-all') }}"
-                                                   class="nav-link {{ request()->routeIs('clients.statement-all') ? 'active' : '' }}">
-                                                    <span class="sub-item">Client Statement</span>
-                                                </a>
-                                            </li>
-                                            @else
-                                                @can('client.statement')
-                                                    <li>
-                                                        <a href="{{ route('clients.statement-all') }}"
-                                                           class="nav-link {{ request()->routeIs('clients.statement-all') ? 'active' : '' }}">
-                                                            <span class="sub-item">Client Statement</span>
-                                                        </a>
-                                                    </li>
-                                                @endcan
-                                                @endrole
                             </ul>
                         </div>
                 </li>
+
+                {{-- Service Menu --}}
+                <li class="nav-item {{ request()->routeIs('service.*') ? 'active' : '' }}">
+                    @role('super_admin')
+                    <a data-bs-toggle="collapse" href="#service"
+                       aria-expanded="{{ request()->routeIs('service.*') ? 'true' : 'false' }}">
+                        <i class="fas fa-address-book"></i>
+                        <p>Service</p>
+                        <span class="caret"></span>
+                    </a>
+                    @else
+                        @canany(['service.list', 'service.create'])
+                            <a data-bs-toggle="collapse" href="#service"
+                               aria-expanded="{{ request()->routeIs('service.*') ? 'true' : 'false' }}">
+                                <i class="fas fa-address-book"></i>
+                                <p>Service</p>
+                                <span class="caret"></span>
+                            </a>
+                        @endcanany
+                        @endrole
+
+                        <div class="collapse {{ request()->routeIs('service.*') ? 'show' : '' }}" id="service">
+                            <ul class="nav nav-collapse">
+                                @role('super_admin')
+                                <li>
+                                    <a href="{{ route('service.index') }}"
+                                       class="nav-link {{ request()->routeIs('service.index') ? 'active' : '' }}">
+                                        <span class="sub-item">List</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('service.create') }}"
+                                       class="nav-link {{ request()->routeIs('service.create') ? 'active' : '' }}">
+                                        <span class="sub-item">Create</span>
+                                    </a>
+                                </li>
+                                @else
+                                    @can('service.list')
+                                        <li>
+                                            <a href="{{ route('service.index') }}"
+                                               class="nav-link {{ request()->routeIs('service.index') ? 'active' : '' }}">
+                                                <span class="sub-item">List</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+
+                                    @can('service.create')
+                                        <li>
+                                            <a href="{{ route('service.create') }}"
+                                               class="nav-link {{ request()->routeIs('service.create') ? 'active' : '' }}">
+                                                <span class="sub-item">Create</span>
+                                            </a>
+                                        </li>
+                                    @endcan
+                                    @endrole
+                            </ul>
+                        </div>
+                </li>
+
 
 
                 <li class="nav-item">
@@ -314,6 +358,22 @@
                                                 @endrole
                             </ul>
                         </div>
+                </li>
+
+                <li class="nav-item {{ request()->is('/site-settings/edit') ? 'active' : '' }}">
+                    @role('super_admin')
+                    <a data-bs-toggle="xcollapse" href="{{ url('/site-settings/edit') }}" class="collapsed" aria-expanded="false">
+                        <i class="fas fa-home"></i>
+                        <p>Settings</p>
+                    </a>
+                    @else
+                        @can('site-setting.view')
+                            <a data-bs-toggle="xcollapse" href="{{ url('/site-settings/edit') }}" class="collapsed" aria-expanded="false">
+                                <i class="fas fa-home"></i>
+                                <p>Settings</p>
+                            </a>
+                        @endcan
+                        @endrole
                 </li>
 
             </ul>

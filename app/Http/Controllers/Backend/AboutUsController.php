@@ -21,8 +21,8 @@ class AboutUsController extends Controller
         $about_us = AboutUs::first() ?? new AboutUs();
 
         $request->validate([
-            'title' => 'required|max:255',
-            'heading' => 'required|max:255',
+            'title' => 'required|string|max:255',
+            'heading' => 'required|string|max:255',
             'details' => 'required',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);

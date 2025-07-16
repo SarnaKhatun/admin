@@ -1,4 +1,5 @@
 @extends('backend.layouts.master')
+@section('title', 'Edit Permission access')
 @section('content')
     <style>
         .form-check,

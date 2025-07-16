@@ -37,7 +37,7 @@
                         <i class="icon-arrow-right"></i>
                     </li>
                     <li class="nav-item">
-                        <a href="#">Slider</a>
+                        <a href="#">Service Category</a>
                     </li>
                 </ul>
             </div>
@@ -46,14 +46,14 @@
                     <div class="card">
                         <div class="card-header">
                             <div class="d-flex align-items-center justify-content-between client">
-                                <div class="card-title">Slider List</div>
+                                <div class="card-title">Service Category List</div>
                                 {{--                                <div class="ms-md-auto py-0 py-md-0 d-flex flex-row gap-2  flex-wrap">--}}
                                 <div class="ms-md-auto py-0 py-md-0">
                                     @role('super_admin')
-                                    <a href="{{ route('slider.create') }}" class="btn btn-primary btn-sm">Add New</a>
+                                    <a href="{{ route('service-category.create') }}" class="btn btn-primary btn-sm">Add New</a>
                                     @else
-                                        @can('slider.create')
-                                            <a href="{{ route('slider.create') }}" class="btn btn-primary btn-sm">Add
+                                        @can('service-category.create')
+                                            <a href="{{ route('service-category.create') }}" class="btn btn-primary btn-sm">Add
                                                 New</a>
                                         @endcan
                                         @endrole
@@ -68,43 +68,27 @@
                                     <thead>
                                     <tr>
                                         <th>#</th>
-                                        <th>Image</th>
-                                        <th>Slider Name</th>
-                                        <th>URL</th>
-                                        <th>Status</th>
-                                        <th>Description</th>
+                                        <th>Name</th>
                                         <th>Action</th>
                                     </tr>
                                     </thead>
 
                                     <tbody>
-                                    @foreach ($sliders as $row)
+                                    @foreach ($categories as $row)
                                         <tr>
                                             <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $row->name }}</td>
                                             <td>
-                                                <img src="{{asset('storage/'.$row->image)}}" alt=""
-                                                     style="height: 70px; width: 70px">
-                                            </td>
-                                            <td>{{ $row->title }}</td>
-                                            <td>{{ $row->url }}</td>
-                                            <td>
-                                                <a href="{{route('slider.status-change', $row->id)}}"
-                                                   class="btn btn-sm btn-{{$row->status == 1 ? 'success': 'danger'}}">
-                                                {{ $row->status == 1 ? 'Active':'Inactive' }}</td>
-                                                </a>
-
-                                            <td>{{ \Illuminate\Support\Str::words($row->description, 5, '...') }}</td>
-                                            <td>
-                                                <a href="{{ route('slider.edit', $row->id) }}"
+                                                <a href="{{ route('service-category.edit', $row->id) }}"
                                                    class="btn btn-sm btn-primary">
                                                     <i class="fa fa-edit"></i>
                                                 </a>
-                                                <form action="{{ route('slider.delete', $row->id) }}"
+                                                <form action="{{ route('service-category.delete', $row->id) }}"
                                                       method="POST"
                                                       style="display:inline;">
                                                     @csrf
                                                     <button type="submit" class="btn btn-sm btn-danger"
-                                                            onclick="return confirm('Are you sure you want to delete this slider?');">
+                                                            onclick="return confirm('Are you sure you want to delete this category?');">
                                                         <i class="fa fa-trash"></i>
                                                     </button>
                                                 </form>
